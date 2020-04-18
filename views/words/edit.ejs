@@ -1,0 +1,47 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+
+
+    <div class="card my-3 bg-transparent border-warning">
+        <div class="card-body">
+            <h4 class="card-title">Modifica parola:<span class="h1 font-weight-light"> <%= word.clautano %></span></h4>
+        </div>
+    </div>
+
+    <form action="/words/<%= word._id %>?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="clautanoInput">Parola "clautana"</label>
+            <input name="word[clautano]" type="text" class="form-control" value="<%= word.clautano %>"
+                id="clautanoInput" aria-describedby="clautanolHelp">
+            <small id="wordlHelp" class="form-text text-muted">Inserire qui la parola in clautano da tradurre</small>
+        </div>
+        <div class="form-group">
+            <label for="alternativoInput">Oppure</label>
+            <input name="word[alternativo]" type="text" class="form-control" value="<%= word.alternativo %>"
+                id="alternativoInput" aria-describedby="alternativolHelp">
+            <small id="alternativolHelp" class="form-text text-muted">Inserire qui un'eventuale termine
+                alternativo</small>
+        </div>
+        <div class="form-group">
+            <label for="categoriaInput">Categoria</label>
+            <input name="word[categoria]" type="text" class="form-control" value="<%= word.categoria %>"
+                id="categoriaInput" aria-describedby="categorialHelp">
+            <small id="categorialHelp" class="form-text text-muted">Inserire qui l'abbreivazione per la categoria
+                di parola, per es. prep. = preposizione</small>
+        </div>
+        <div class="form-group">
+            <label for="traduzioneTextarea">Traduzione italiana</label>
+            <textarea name="word[traduzione]" class="form-control" id="traduzioneTextarea" rows="4"
+                aria-describedby="traduzionelHelp"><%= word.traduzione %></textarea>
+            <small id="traduzionelHelp" class="form-text text-muted">Inserire qui la traduzione in italiano della parola
+                clautana</small>
+        </div>
+        <button type="submit" class="btn btn-warning text-white">Salva</button>
+    </form>
+    <form action="/words/<%= word._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-danger">Elimina</button>
+    </form>
+</div>
+
+<%- include("../partials/footer") %>

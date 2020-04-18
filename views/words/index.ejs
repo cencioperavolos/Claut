@@ -1,0 +1,33 @@
+<%- include("../partials/header") %>
+
+<div class="container serifChar">
+
+    <% let previousLetter;
+    let collator = new Intl.Collator('it', {sensitivity: 'base'}); %>
+
+    <div id="voc_list" class="list-group list-group-flush">
+        <% words.forEach(word => { %>
+        <% if ( collator.compare(word.clautano[0] , previousLetter) !== 0) {
+                previousLetter = word.clautano[0]; %>
+        <h1><%=previousLetter.toUpperCase()%></h1>
+        <% } %>
+
+        <a href="/words/<%= word._id %>" class="list-group-item list-group-item-action bg-transparent">
+            <div>
+                <span class="clautano"><%= word.clautano %></span>
+                <% if(word.alternativo){ %>
+                <span class="categoria"> (o </span>
+                <span class="alternativo"><%= word.alternativo %></span><span>)</span>
+                <% } %>
+                <span class="categoria"> <%= word.categoria %></span>
+                <span class="traduzione"><%= word.traduzione %></span>
+            </div>
+        </a>
+
+        <% }); %>
+    </div>
+
+</div>
+
+
+<%- include("../partials/footer") %>
