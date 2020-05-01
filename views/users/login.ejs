@@ -1,0 +1,27 @@
+<%- include("../partials/header") %>
+
+<h2>Login form</h2>
+
+<form id="userDataForm" action="/login" method="post">
+    <input id="email" type="text" name="email" placeholder="email" id="">
+    <input type="password" name="password" placeholder="password" id="">
+    <input type="submit" value="Invio">
+    <input id="username" type="hidden" name="username">
+</form>
+
+<%- include("../partials/footer") %>
+
+<script>
+    function cloneEmail(event) {
+        console.log("Cloning....")
+        var src = document.getElementById("email"),
+            dst = document.getElementById("username");
+        dst.value = src.value;
+    };
+    var ele = document.querySelector('#userDataForm');
+    if (ele.addEventListener) {
+        ele.addEventListener("submit", cloneEmail, false);  //Modern browsers
+    } else if (ele.attachEvent) {
+        ele.attachEvent('onsubmit', cloneEmail);            //Old IE
+    }
+</script>
