@@ -39,15 +39,19 @@
         </li>
         <% if (locals.currentUser){ %>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Parola
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/words/new">Nuova</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Modifica</a>
-            <a class="dropdown-item" href="#">Elimina</a>
+            <% if(locals.word){ %>
+            <a class="dropdown-item" href="/words/<%=word._id%>/edit">Modifica</a>
+            <form action="/words/<%= word._id %>?_method=DELETE" method="POST">
+              <button type="submit" class="dropdown-item">Elimina</button>
+            </form>
+            <% } %>
           </div>
         </li>
         <% } %>
@@ -60,13 +64,16 @@
           <a class="nav-link" href="/register">Sign Up</a>
         </li>
         <% } else { %>
-        <span class="navbar-text font-weight-light font-italic">Logged In As </span><a class="nav-link" href="#"><%= currentUser %></a>  
+        <li class="nav-item">
+          <span class="navbar-text font-weight-light font-italic mr-1">Logged In As</span><a
+            class="nav-link d-inline pl-0" href="#"></span>'<%= currentUser.fullName %>'</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
         </li>
         <% } %>
 
-        
+
       </ul>
     </div>
   </nav>

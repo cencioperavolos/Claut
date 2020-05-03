@@ -3,6 +3,7 @@
 const express = require('express')
 const Word = require('../models/word')
 const isLoggedIn = require('../middleware').isLoggedIn
+const isOwnerOrAdmin = require('../middleware').isOwnerOrAdmin
 const router = new express.Router()
 
 // INDEX list all words with pagination
@@ -88,6 +89,8 @@ router.post('/', isLoggedIn, async (req, res) => {
   const newWord = new Word(
     req.body.word
   )
+  newWord.user.id = req.user._id
+  newWord.user.fullName = req.user.fullName
   try {
     await newWord.save()
     // res.status(201).send(newWord) //created
@@ -98,7 +101,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 })
 
 // EDIT show edit word form
-router.get('/:id/edit', isLoggedIn, async (req, res) => {
+router.get('/:id/edit', isOwnerOrAdmin, async (req, res) => {
   try {
     const word = await Word.findById(req.params.id)
     res.render('words/edit', {
@@ -122,7 +125,7 @@ router.get('/:id/edit', isLoggedIn, async (req, res) => {
 })
 
 // UPDATE worde and redirect to index
-router.put('/:id', isLoggedIn, async (req, res) => {
+router.put('/:id', isOwnerOrAdmin, async (req, res) => {
   try {
     const word = await Word.findByIdAndUpdate(req.params.id, req.body.word, {
       new: true,
@@ -131,17 +134,17 @@ router.put('/:id', isLoggedIn, async (req, res) => {
     if (!word) {
       res.status(404).send('Word not found!')
     }
-    res.redirect('/words')
+    res.redirect('/words/search/?parola=' + word.clautano)
   } catch (e) {
     res.status(418).send(e)
   }
 })
 
 // DESTROY remove word from db and redirect to index
-router.delete('/:id', isLoggedIn, async (req, res) => {
+router.delete('/:id', isOwnerOrAdmin, async (req, res) => {
   try {
-    await Word.findByIdAndDelete(req.params.id)
-    res.redirect('/words')
+    const deleted = await Word.findByIdAndDelete(req.params.id)
+    res.redirect('/words/search/?parola=' + deleted.clautano)
   } catch (e) {
     res.status(418).send(e)
   }

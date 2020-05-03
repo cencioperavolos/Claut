@@ -4,31 +4,31 @@
 
     <div class="card my-3 bg-transparent border-warning serifChar">
         <div class="card-body">
-           
 
-        <h4 class="display-4">
-            <%= word.clautano %>
-        </h4>
+            <h4 class="display-4">
+                <%= word.clautano %>
+            </h4>
 
-        <p class="lead">
-            <% if(word.alternativo){ %>
-            <span class="categoria"> (o </span>
-            <span class="alternativo"><%= word.alternativo %></span><span>)</span>
-            <% } %>
-        </p>
-        <hr class="my-4">
-        <p>
-            <span class="categoria mr-2"> <%= word.categoria %></span>
-            <span id="traduzione"><%= word.traduzione %></span>
-        </p>
-
-
-
+            <p class="lead">
+                <% if(word.alternativo){ %>
+                <span class="categoria"> (o </span>
+                <span class="alternativo"><%= word.alternativo %></span><span>)</span>
+                <% } %>
+            </p>
+            <hr class="my-4">
+            <p>
+                <span class="categoria mr-2"> <%= word.categoria %></span>
+                <span id="traduzione"><%= word.traduzione %></span>
+            </p>
 
         </div>
+    
     </div>
-
-    <a href="/words/<%=word._id%>/edit" class="btn btn-warning text-white">Modifica</a>
+    <% if (word.user.fullName) { %>
+        <small class="d-flex justify-content-end text-muted"><span class="mr-1 font-italic">Inserita da:</span><%= word.user.fullName %></small> 
+    <% } %>
+    
+    
 
 </div>
 

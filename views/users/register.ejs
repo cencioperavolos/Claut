@@ -6,17 +6,22 @@
 
 <%- include("../partials/header") %>
 
-<h2>Register form</h2>
+<div class="container">
+    <h2>Register form</h2>
 
-<form id="userDataForm" action="/register" method="POST">
-    <input type="text" name="firstName" placeholder="name" id="">
-    <input type="text" name="lastName" placeholder="surname" id="">
-    <input id="email" type="text" name="email" placeholder="email" id="">
-    <input type="password" name="password" placeholder="password" id="">
-    <input type="submit" value="Invio">
-    <input id="username" type="hidden" name="username">
-</form>
+    <form id="userDataForm" action="/register" method="POST">
+        <div class="form-group">
+            <input type="text" class="form-control" name="firstName" placeholder="nome" id="">
+            <input type="text" class="form-control" name="lastName" placeholder="cognome" id="">
+            <input type="text" class="form-control" name="surname" placeholder="soprannome" id="">
+            <input id="email" type="email" class="form-control" name="email" placeholder="email" id="">
+            <input type="password" class="form-control" name="password" placeholder="password" id="">
+            <input type="submit" value="Invio">
+            <input id="username" type="hidden" name="username">
+        </div>
+    </form>
 
+</div>
 <%- include("../partials/footer") %>
 <script>
     function cloneEmail(event) {

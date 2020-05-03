@@ -61,8 +61,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // ADD ROUTES & PERSONAL MIDDLEWARE ################################################
-app.use(function (req, res, next) { // se presente l'user nella session aggiunge dati al locals per l'elaborazione ejs
-  res.locals.currentUser = req.user ? req.user.firstName : undefined
+app.use(function (req, res, next) { // iniect curretnuser on response for ejs elaboration
+  console.log(req.user)
+  res.locals.currentUser = req.user
   next()
 })
 app.use('/', authRoute)
@@ -72,7 +73,7 @@ app.get('/', (req, res) => {
   res.redirect('/words')
 })
 
-app.get('/secret', require('./routers/authRoute'), (req, res) => {
+app.get('/secret', require('./middleware').isLoggedIn, (req, res) => {
   res.render('users/secret')
 })
 
