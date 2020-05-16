@@ -1,20 +1,40 @@
 <%- include("../partials/header") %>
 
-<h2>Login form</h2>
+<div class="container">
 
-<form id="userDataForm" action="/login" method="post">
-    <input id="email" type="text" name="email" placeholder="email" id="">
-    <input type="password" name="password" placeholder="password" id="">
-    <input type="submit" value="Invio">
-    <input id="username" type="hidden" name="username">
-</form>
+    <div class="card my-3 border-warning bg-transparent">
+        <div class="card-body">
+            <h4 class="card-title">Login</h4>
+        </div>
+    </div>
+
+    <form id="userDataForm" action="/login" method="post">
+
+        <div class="form-group">
+            <label for="emailInput">Nome utente (email):</label>
+            <input class="form-control" id="emailInput" type="email" name="email" placeholder="email@mail.com"
+                aria-describedby="emailHelp" required>
+            <!-- <small id="emaillHelp" class="form-text text-muted">Inserire il proprio mone utente corrispondente
+                all'indirizzo mail</small> -->
+        </div>
+        <div class="form-group">
+            <label for="passwordInput">Password:</label>
+            <input class="form-control" id="passwordInput" type="password" name="password" placeholder="password"
+                aria-describedby="passwordHelp" required>
+            <!-- <small id="passwordlHelp" class="form-text text-muted">Inserire la propria password</small> -->
+        </div>
+        <input type="submit" value="Invio" class="btn btn-warning text-white">
+        <input id="username" type="hidden" name="username">
+    </form>
+
+</div>
 
 <%- include("../partials/footer") %>
 
 <script>
     function cloneEmail(event) {
         console.log("Cloning....")
-        var src = document.getElementById("email"),
+        var src = document.getElementById("emailInput"),
             dst = document.getElementById("username");
         dst.value = src.value;
     };

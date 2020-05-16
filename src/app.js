@@ -8,6 +8,7 @@ const methodOverride = require('method-override')
 const expressSession = require('express-session')
 const passport = require('passport')
 const passportUtils = require('./util/passportUtils')
+const flash = require('connect-flash')
 // routes
 const wordsRoute = require('./routers/wordsRoute')
 const authRoute = require('./routers/authRoute')
@@ -60,17 +61,19 @@ passportUtils.passportSetup()
 app.use(passport.initialize())
 app.use(passport.session())
 
-// ADD ROUTES & PERSONAL MIDDLEWARE ################################################
-app.use(function (req, res, next) { // iniect curretnuser on response for ejs elaboration
-  console.log(req.user)
-  res.locals.currentUser = req.user
+// ADD FLASH, ROUTES & PERSONAL MIDDLEWARE ################################################
+app.use(flash())
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user // injects curretnuser on response for ejs elaboration
+  res.locals.error = req.flash('error') // injects flash error message
+  res.locals.success = req.flash('success') // injects flash success message
   next()
 })
 app.use('/', authRoute)
 app.use('/words', wordsRoute)
 // Routes ##########################################################################
 app.get('/', (req, res) => {
-  res.redirect('/words')
+  res.render('landing')
 })
 
 app.get('/secret', require('./middleware').isLoggedIn, (req, res) => {

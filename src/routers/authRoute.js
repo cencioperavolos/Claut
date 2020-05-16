@@ -25,12 +25,12 @@ router.post('/register', (req, res) => {
   // passport authenticate needs req.body.username & req.body.password
   user.save().then((savedUser) => {
     passport.authenticate('local')(req, res, function () {
+      req.flash('success', 'Accesso effettuato, ' + user.firstName)
       res.redirect('/secret')
     })
   }).catch((err) => {
-    const errorMsg = 'Something bad has hrouterened! ' + err.message
-    console.log(errorMsg)
-    return res.render('users/register', { errorMsg })
+    req.flash('error', err.message)
+    return res.redirect('/register')
   })
 })
 
@@ -40,16 +40,40 @@ router.get('/login', (req, res) => {
 })
 
 // handling user login - passport authenticate needs req.body.username & req.body.password
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/secret',
-  failureRedirect: '/login'
+router.post('/login', function (req, res) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) {
+      req.flash('error', err.message)
+      return res.redirect('/login')
+    }
+    if (!user) {
+      req.flash('error', 'Nome utente e/o password errati')
+      return res.redirect('/login')
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        req.flash('error', err.message)
+        res.redirect('/login')
+      }
+      req.flash('success', 'Bundì, ' + user.firstName)
+      return res.redirect('/secret')
+    })
+  })(req, res)
 })
-)
+// router.post('/login', passport.authenticate('local', {
+//   successRedirect: '/secret',
+//   failureRedirect: '/login',
+//   failureFlash: 'Nome utente e/o password errati.',
+//   successFlash: 'Benvenuto'
+// })
+// )
 
 // handling user log out
 router.get('/logout', (req, res) => {
+  const name = req.user.firstName
   req.logout()
-  res.redirect('/')
+  req.flash('success', 'Sani, ' + name)
+  res.redirect('/words')
 })
 
 module.exports = router

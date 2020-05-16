@@ -14,7 +14,7 @@ const wordSchema = new mongoose.Schema({
   },
   categoria: {
     type: String
-  }, 
+  },
   traduzione: {
     type: String,
     required: true
@@ -25,6 +25,10 @@ const wordSchema = new mongoose.Schema({
       ref: 'User'
     },
     fullName: String
+  },
+  voc_claut_1996: { // se vero la parola è presa dal 'VOCABOLARIO CLAUTANO - Borsatti, Giordani, Peressini - 1996'
+    type: Boolean,
+    default: false
   }
 
 })

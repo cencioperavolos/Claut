@@ -54,5 +54,15 @@
 
 </div>
 
+<script>
+    const collator = new Intl.Collator('it', { sensitivity: 'base' })
+    const parola = new URLSearchParams(window.location.search).get('parola');
+    const peravolos = document.getElementsByClassName('clautano')
+    for (let p of peravolos) {
+        if (collator.compare(parola, p.textContent) === 0) {
+            p.parentElement.style.background = '#ffdd95';
+        }
+    };
+</script>
 
 <%- include("../partials/footer") %>

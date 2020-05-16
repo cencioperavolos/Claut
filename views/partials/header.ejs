@@ -65,15 +65,26 @@
         </li>
         <% } else { %>
         <li class="nav-item">
-          <span class="navbar-text font-weight-light font-italic mr-1">Logged In As</span><a
-            class="nav-link d-inline pl-0" href="#"></span>'<%= currentUser.fullName %>'</a>
+          <span class="navbar-text text-muted font-weight-light font-italic mr-2">Logged In As</span><a
+            class="nav-link d-inline pl-0 text-warning" href="#"></span><%= currentUser.firstName %></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
         </li>
         <% } %>
 
-
       </ul>
     </div>
   </nav>
+
+  <div class="container my-3">
+    <% if ( error && error.length > 0 ) {%>
+    <div class="alert alert-danger">
+      <%= error %>
+    </div>
+    <% } else if ( success && success.length > 0 ) {%>
+    <div class="alert alert-success">
+      <%= success %>
+    </div>
+    <% } %>
+  </div>

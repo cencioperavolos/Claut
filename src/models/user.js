@@ -5,17 +5,17 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 3,
-    maxlength: 12
+    maxlength: 15
   },
   lastName: {
     type: String,
     required: true,
     minlength: 3,
-    maxlength: 12
+    maxlength: 15
   },
   surname: {
     type: String,
-    maxlength: 12
+    maxlength: 15
   },
   admin: {
     type: Boolean,

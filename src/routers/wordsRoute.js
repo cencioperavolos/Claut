@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
     const totale = await Word.estimatedDocumentCount()
     const perPage = 10
     const current = (isNaN(req.query.page)) ? 0 : +req.query.page - 1 // default page to 1
-    const k = (current === 0) ? 0 : 1 // if not first page (k=1) read last word of previous page for  BCD... title
+    const k = (current === 0) ? 0 : 1 // if not first page (k=1) read last word of previous page for first letter BCD... title
 
     const words = await Word.find({})
       .collation({
@@ -62,10 +62,14 @@ router.get('/search', async (req, res) => {
       .sort({ clautano: 1 })
       .countDocuments()
     const page = Math.trunc(position / perPage) + 1
+
+    req.flash('success', res.locals.success[0]) // reinject flash message
+    req.flash('error', res.locals.error[0]) // reinject flash message
+
     res.redirect('/words/?page=' + page + '&parola=' + req.query.parola)
   } catch (e) {
     console.log('ERROR!!!', e)
-    res.status(500).send(e)
+    res.status(500).send(e.message)
   }
 })
 
@@ -94,6 +98,7 @@ router.post('/', isLoggedIn, async (req, res) => {
   try {
     await newWord.save()
     // res.status(201).send(newWord) //created
+    req.flash('success', 'Nuova parola inserita.')
     res.redirect('/words/' + newWord._id)
   } catch (e) {
     res.status(400).send(e) // bad request
@@ -126,6 +131,7 @@ router.get('/:id/edit', isOwnerOrAdmin, async (req, res) => {
 
 // UPDATE worde and redirect to index
 router.put('/:id', isOwnerOrAdmin, async (req, res) => {
+  if (!req.body.word.voc_claut_1996) { req.body.word.voc_claut_1996 = false }
   try {
     const word = await Word.findByIdAndUpdate(req.params.id, req.body.word, {
       new: true,
@@ -134,6 +140,7 @@ router.put('/:id', isOwnerOrAdmin, async (req, res) => {
     if (!word) {
       res.status(404).send('Word not found!')
     }
+    req.flash('success', 'Parola modificata.')
     res.redirect('/words/search/?parola=' + word.clautano)
   } catch (e) {
     res.status(418).send(e)
@@ -144,6 +151,7 @@ router.put('/:id', isOwnerOrAdmin, async (req, res) => {
 router.delete('/:id', isOwnerOrAdmin, async (req, res) => {
   try {
     const deleted = await Word.findByIdAndDelete(req.params.id)
+    req.flash('success', '"' + deleted.clautano + '" eliminata definitivamente.')
     res.redirect('/words/search/?parola=' + deleted.clautano)
   } catch (e) {
     res.status(418).send(e)

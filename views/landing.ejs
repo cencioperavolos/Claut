@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- bootstrap css cdn -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+    <title>Claut App</title>
+
+    <link rel="stylesheet" href="/css/custom.css"> <!-- Bootstrap customized recompiled with sass-->
+    <link rel="stylesheet" href="/css/landing.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <% if(error && error.length > 0){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+        <% } %>
+    </div>
+
+
+    <div id="landing-header">
+        <h2 class="text-warning">VOCALBOLARIO</h2>
+        <h1 class="text-warning mb-5">C L A U T A N O</h1>
+        <form class="d-inline-block form-inline my-3 my-lg-0 mr-auto" action="/words/search" method="GET">
+            <input class="form-control bg-transparent border-warning text-warning" type="search" name="parola" placeholder="..." aria-label="Cerca">
+            <button class="btn btn-warning my-2 my-sm-0" type="submit">></button>
+        </form>        
+    </div>
+
+    <ul class="slideshow">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <% include("partials/footer") %>

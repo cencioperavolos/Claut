@@ -7,8 +7,9 @@ const exportFunctions = {}
 // midddleware for check user login
 exportFunctions.isLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {
-    return next()
+    return next() 
   } else {
+    req.flash('error', 'Devi accedere per poter proseguire.')
     res.redirect('/login')
   }
 }
@@ -21,6 +22,7 @@ exportFunctions.isOwnerOrAdmin = async function (req, res, next) {
       if (word.user.id.equals(req.user._id) || req.user.admin) {
         next()
       } else {
+        req.flash('error', 'Non sei autorizzato a procedere.')
         res.redirect('back')
       }
     } catch (e) {
@@ -28,7 +30,8 @@ exportFunctions.isOwnerOrAdmin = async function (req, res, next) {
       res.status(401).send(e.message)
     }
   } else {
-    res.send('devi accedere...')
+    req.flash('error', 'Devi accedere per poter proseguire.')
+    res.redirect('/login')
   }
 }
 

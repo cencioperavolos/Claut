@@ -7,16 +7,46 @@
 <%- include("../partials/header") %>
 
 <div class="container">
-    <h2>Register form</h2>
+    <div class="card my-3 border-warning bg-transparent">
+        <div class="card-body">
+            <h4 class="card-title">Sign Up</h4>
+        </div>
+    </div>
 
     <form id="userDataForm" action="/register" method="POST">
-        <div class="form-group">
-            <input type="text" class="form-control" name="firstName" placeholder="nome" id="">
-            <input type="text" class="form-control" name="lastName" placeholder="cognome" id="">
-            <input type="text" class="form-control" name="surname" placeholder="soprannome" id="">
-            <input id="email" type="email" class="form-control" name="email" placeholder="email" id="">
-            <input type="password" class="form-control" name="password" placeholder="password" id="">
-            <input type="submit" value="Invio">
+        <div class="form-group">            
+            <div class="form-group">
+                <label for="firstNameInput">Nome:</label>
+                <input class="form-control" id="firstNameInput" type="text" name="firstName" placeholder="Teresa"
+                    aria-describedby="firstNameHelp" required minlength="3" maxlength="15">
+                <small id="firstNameHelp" class="form-text text-muted">Inserire il proprio mone (3-15 caratteri).</small>
+            </div>
+            <div class="form-group">
+                <label for="lastNameInput">Cognome:</label>
+                <input class="form-control" id="lastNameInput" type="text" name="lastName" placeholder="Borsatti"
+                    aria-describedby="lastNameHelp" required minlength="3" maxlength="15">
+                <small id="lastNameHelp" class="form-text text-muted">Inserire il proprio cognome (3-15 caratteri).</small>
+            </div>
+            <div class="form-group">
+                <label for="surnameInput">Soprannome:</label>
+                <input class="form-control" id="surnameInput" type="text" name="surname" placeholder="Chinese"
+                    aria-describedby="surnameHelp" maxlength="15">
+                <small id="surameHelp" class="form-text text-muted">Inserire il proprio cognome (max 15 caratteri).</small>
+            </div>
+            <div class="form-group">
+                <label for="emailInput">Email:</label>
+                <input class="form-control" id="emailInput" type="email" name="email" placeholder="teresa.borsatti@sito.org"
+                    aria-describedby="emailHelp" required >
+                <small id="emailHelp" class="form-text text-muted">Inserire il proprio indirizzo mail che sarà il proprio nome utente.</small>
+            </div>
+            <div class="form-group">
+                <label for="passwordInput">Nome:</label>
+                <input class="form-control" id="password" type="password" name="password" placeholder="password"
+                    aria-describedby="passwordHelp" required minlength="8">
+                <small id="passwordHelp" class="form-text text-muted">Inserire la propria password (almeno 8 caratteri ).</small>
+            </div>
+
+            <input class="btn btn-warning text-white" type="submit" value="Invio">
             <input id="username" type="hidden" name="username">
         </div>
     </form>
@@ -26,7 +56,7 @@
 <script>
     function cloneEmail(event) {
         console.log("Cloning....")
-        var src = document.getElementById("email"),
+        var src = document.getElementById("emailInput"),
             dst = document.getElementById("username");
         dst.value = src.value;
     };
