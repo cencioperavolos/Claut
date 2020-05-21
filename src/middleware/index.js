@@ -14,12 +14,12 @@ exportFunctions.isLoggedIn = function (req, res, next) {
   }
 }
 
-// middleware for check word owner or admin user
-exportFunctions.isOwnerOrAdmin = async function (req, res, next) {
+// middleware for check word owner or isAdmin user
+exportFunctions.isOwnerOrisAdmin = async function (req, res, next) {
   if (req.isAuthenticated()) {
     try {
       const word = await Word.findById(req.params.id)
-      if (word.user.id.equals(req.user._id) || req.user.admin) {
+      if (word.user.id.equals(req.user._id) || req.user.isAdmin) {
         next()
       } else {
         req.flash('error', 'Non sei autorizzato a procedere.')

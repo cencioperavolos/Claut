@@ -1,3 +1,0 @@
-Search TODO
-Install BOOTSTRAP with npm
-user model min length - vlaidators

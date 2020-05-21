@@ -24,7 +24,8 @@ const wordSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    fullName: String
+    fullName: String,
+    isVerified: Boolean
   },
   voc_claut_1996: { // se vero la parola è presa dal 'VOCABOLARIO CLAUTANO - Borsatti, Giordani, Peressini - 1996'
     type: Boolean,

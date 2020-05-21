@@ -27,13 +27,12 @@
     <div class="d-flex justify-content-between">
         <% if (word.voc_claut_1996) { %>
         <small class="text-muted mr-3"><span class="mr-1 font-italic">Fonte:<br></span>'VOCABOLARIO CLAUTANO - Borsatti, Giordani, Peressini - 1996'</small>
-        <% } %>
-        <% if (currentUser && currentUser.admin === true) { %>
+        <% }  else { %><div></div><% } %>
+        <% if ((currentUser && currentUser.isAdmin === true) || (currentUser && currentUser._id.equals(word.user.id))) { %>
         <small class="text-muted"><span class="mr-1 font-italic">Inserita
                 da:<br></span><%= word.user.fullName %></small>
-        <% } %>
+        <% } else { %><div></div><% } %>
     </div>
-
 
 </div>
 

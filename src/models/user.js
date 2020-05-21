@@ -17,7 +17,11 @@ var userSchema = new mongoose.Schema({
     type: String,
     maxlength: 15
   },
-  admin: {
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
+  isVerified: {
     type: Boolean,
     default: false
   },

@@ -31,14 +31,13 @@
     <div id="voc_list" class="list-group list-group-flush">
         <%  previousLetter = words.shift().clautano[0];
             words.forEach(word => { %>
-
         <% if ( collator.compare(word.clautano[0] , previousLetter) !== 0) {
                 previousLetter = word.clautano[0]; %>
         <h1><%=previousLetter.toUpperCase()%></h1>
         <% } %>
 
         <a href="/words/<%= word._id %>" class="list-group-item list-group-item-action bg-transparent">
-            <div>
+            <div class="<%= word.user.isVerified ? '' : 'notVerified' %>"</div>
                 <span class="clautano"><%= word.clautano %></span>
                 <% if(word.alternativo){ %>
                 <span class="categoria"> (o </span>
