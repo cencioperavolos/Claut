@@ -1,0 +1,33 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="card my-3 border-warning bg-transparent">
+        <div class="card-header">
+            <h4 class="card-title">Utente</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><%= currentUser.firstName %> <%= currentUser.lastName %> <span
+                    class="font-italic">"<%= currentUser.surname %>"</span></h5>
+            <p class="card-text"><%= currentUser.email %></p>
+            <% if( currentUser.isVerified ){ %>
+            
+            <p class="card-text"><img src="/images/icons/check_24px.svg"> Verificato</p>
+            <% } %>
+
+            <p class="card-text">Numero parole inserite: <%= totWords %></p>
+        </div>
+    </div>
+    <form id="changePasswordForm" action="/users/change" method="post">
+        <div class="form-group">
+            <label for="newPasswordInput_1">Cambia password:</label>
+            <input id="newPasswordInput_1" class="form-control" type="password" name="newPassword_1" placeholder="Nuova password" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="newPassword_2" placeholder="Ripeti nuova password" required>
+        </div>
+        <input type="submit" value="Salva" class="btn btn-warning text-white">
+    </form>
+
+</div>
+
+<%- include("../partials/footer") %>

@@ -11,7 +11,7 @@ const passportUtils = require('./util/passportUtils')
 const flash = require('connect-flash')
 // routes
 const wordsRoute = require('./routers/wordsRoute')
-const authRoute = require('./routers/authRoute')
+const usersRoute = require('./routers/usersRoute')
 
 // Mongoose config and connect #####################################################
 const databaseUrl = process.env.DATABASEURL || 'mongodb://localhost/'
@@ -69,7 +69,7 @@ app.use(function (req, res, next) {
   res.locals.success = req.flash('success') // injects flash success message
   next()
 })
-app.use('/', authRoute)
+app.use('/users', usersRoute)
 app.use('/words', wordsRoute)
 // Routes ##########################################################################
 app.get('/', (req, res) => {

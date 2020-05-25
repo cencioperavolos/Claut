@@ -10,7 +10,7 @@ exportFunctions.isLoggedIn = function (req, res, next) {
     return next() 
   } else {
     req.flash('error', 'Devi accedere per poter proseguire.')
-    res.redirect('/login')
+    res.redirect('/users/login')
   }
 }
 
@@ -31,7 +31,7 @@ exportFunctions.isOwnerOrisAdmin = async function (req, res, next) {
     }
   } else {
     req.flash('error', 'Devi accedere per poter proseguire.')
-    res.redirect('/login')
+    res.redirect('/users/login')
   }
 }
 

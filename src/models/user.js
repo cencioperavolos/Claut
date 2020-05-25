@@ -39,7 +39,7 @@ var userSchema = new mongoose.Schema({
 
 userSchema.virtual('fullName').get(function () {
   let fn = `${this.firstName} ${this.lastName}`
-  if (this.surname.length > 0) {fn = fn.concat(' "' + this.surname + '"') }
+  if (this.surname.length > 0) { fn = fn.concat(' "' + this.surname + '"') }
   return fn
 })
 
