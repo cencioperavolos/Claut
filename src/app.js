@@ -17,9 +17,8 @@ const wordsRoute = require('./routers/wordsRoute')
 const usersRoute = require('./routers/usersRoute')
 
 // Mongoose config and connect #####################################################
-const databaseUrl = process.env.DATABASEURL || 'mongodb://localhost/'
-const databseName = 'vocabolario_clautano'
-mongoose.connect(databaseUrl + databseName,
+const databaseUrl = process.env.DATABASEURL || 'mongodb://localhost/vocabolario_clautano'
+mongoose.connect(databaseUrl,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
