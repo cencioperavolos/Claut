@@ -9,6 +9,9 @@ const expressSession = require('express-session')
 const passport = require('passport')
 const passportUtils = require('./util/passportUtils')
 const flash = require('connect-flash')
+
+require('dotenv').config()
+
 // routes
 const wordsRoute = require('./routers/wordsRoute')
 const usersRoute = require('./routers/usersRoute')
@@ -43,7 +46,7 @@ app.use(express.static(publicDirectoryPath))
 const MongoStore = require('connect-mongo')(expressSession)
 const sessionStore = new MongoStore({ mongooseConnection: mongoose.connection, collection: 'sessions' })
 app.use(expressSession({
-  secret: 'Keep Me Secure In Environment Variable !?.&*§...',
+  secret: process.env.EXPRESS_SESSION_SECRET ,
   resave: false,
   saveUninitialized: false,
   store: sessionStore,

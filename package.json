@@ -4,6 +4,7 @@
   "description": "Sito web per un vocabolario Clautano",
   "main": "app.js",
   "scripts": {
+    "start": "node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "bootstrap": "sass .\\scss\\custom.scss .\\public\\css\\custom.css"
   },
@@ -15,6 +16,7 @@
     "bootstrap": "^4.4.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
