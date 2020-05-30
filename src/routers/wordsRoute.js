@@ -119,7 +119,17 @@ router.post('/', isLoggedIn, async (req, res) => {
     req.flash('success', 'Nuova parola inserita.')
     res.redirect('/words/' + newWord._id)
   } catch (e) {
-    res.status(400).send(e) // bad request
+    if (e.code === 11000) {
+      try {
+        const presentWord = await Word.findOne({ clautano: newWord.clautano })
+        req.flash('error', 'La parola "' + newWord.clautano + '" è già presente.')
+        res.redirect('/words/' + presentWord._id)
+      } catch (er) {
+        res.status(400).send(e) // bad request
+      }
+    } else {
+      res.status(400).send(e) // bad request
+    }
   }
 })
 
