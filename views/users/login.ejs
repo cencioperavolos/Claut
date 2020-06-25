@@ -2,20 +2,21 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col col-md-9">
-
-            <div class="card my-3 border-warning bg-transparent">
+        <div class="col-md-4 d-none d-md-block">
+            <img src="/images/GnaLenaXL-border_light.png" class="img-fluid" alt="">
+        </div>
+        <div class="col col-md-6">
+            <div class="card my-3 bg-light-accent text-light-shade">
                 <div class="card-body">
-                    <h4 class="card-title">Login</h4>
+                    <h4 class="card-title">Inserire i dati per accedere.</h4>
                 </div>
             </div>
 
             <form id="userDataForm" action="/users/login" method="post">
-
                 <div class="form-group">
                     <label for="emailInput">Nome utente (Email):</label>
                     <input class="form-control" id="emailInput" type="email" name="email" placeholder="email@mail.com"
-                        aria-describedby="emailHelp" required>
+                        aria-describedby="emailHelp" required autofocus>
                     <!-- <small id="emaillHelp" class="form-text text-muted">Inserire il proprio mone utente corrispondente
                 all'indirizzo mail</small> -->
                 </div>
@@ -25,9 +26,21 @@
                         placeholder="password" aria-describedby="passwordHelp" required>
                     <!-- <small id="passwordlHelp" class="form-text text-muted">Inserire la propria password</small> -->
                 </div>
-                <input type="submit" value="Invio" class="btn btn-warning text-white">
+                <div class="form-group d-flex justify-content-center">
+                    <input type="submit" value="Invia" class="btn btn-primary">
+                </div>
                 <input id="username" type="hidden" name="username">
             </form>
+
+            <div class="card my-5 border-primary bg-transparent">
+                <div class="card-header">
+                    NUOVO UTENTE
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Se non sei ancora registrato clicca il seguente collegamento per iniziare.</p>
+                    <a href="/users/register" class="btn btn-primary text-left">Registrati</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

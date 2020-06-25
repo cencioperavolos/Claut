@@ -1,36 +1,15 @@
 <%- include("../partials/header") %>
 
-<% if (pages > 0) { %>
-<nav id="navigator">
-    <ul class="pagination justify-content-center mt-3">
-
-        <% if (page <= 1) { %>
-        <li class="page-item invisible"><a class="page-link">&laquo;</a></li>
-        <% } else { %>
-        <li class="page-item"><a class="page-link" href="/words?page=<%= Number(page)-1%>">&laquo;</a></li>
-        <% } %>
-
-        <li class="page-item active page-link mx-3 text-warning"><%= page %> / <%= pages %></li>
-
-        <% if (page == pages) { %>
-        <li class="page-item invisible"><a class="page-link">&raquo</a></li>
-        <% } else { %>
-        <li class="page-item"><a class="page-link" href="/words?page=<%= Number(page)+1 %>">&raquo</a></li>
-        <% } %>
-    </ul>
-</nav>
-<% } %>
-
+<%- include("../partials/navigator") %>
 
 <div class="container serifChar">
-
 
     <% let previousLetter;
     let collator = new Intl.Collator('it', {sensitivity: 'base'}); %>
 
     <div id="voc_list" class="list-group list-group-flush">
         <%  previousLetter = words.shift().clautano[0];
-            words.forEach(word => { %>
+        words.forEach(word => { %>
         <% if ( collator.compare(word.clautano[0] , previousLetter) !== 0) {
                 previousLetter = word.clautano[0]; %>
         <h1><%=previousLetter.toUpperCase()%></h1>
@@ -53,13 +32,15 @@
 
 </div>
 
+<%- include("../partials/navigator") %>
+
 <script>
     const collator = new Intl.Collator('it', { sensitivity: 'base' })
     const parola = new URLSearchParams(window.location.search).get('parola');
     const peravolos = document.getElementsByClassName('clautano')
     for (let p of peravolos) {
         if (collator.compare(parola, p.textContent) === 0) {
-            p.parentElement.style.background = '#ffdd95';
+            p.parentElement.classList.add("bg-light-accent");
         }
     };
 </script>

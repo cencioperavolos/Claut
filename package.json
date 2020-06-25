@@ -5,15 +5,14 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "bootstrap": "sass .\\scss\\custom.scss .\\public\\css\\custom.css"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cencio Peravolos",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "dotenv": "^8.2.0",

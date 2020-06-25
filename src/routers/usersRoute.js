@@ -58,7 +58,7 @@ router.post('/login', function (req, res) {
         res.redirect('/users/login')
       }
       req.flash('success', 'Bundì, ' + user.firstName)
-      return res.redirect('/words')
+      return res.redirect('/')
     })
   })(req, res)
 })
@@ -93,7 +93,7 @@ router.get('/logout', (req, res) => {
   const name = req.user.firstName
   req.logout()
   req.flash('success', 'Sani, ' + name)
-  res.redirect('/words')
+  res.redirect('/')
 })
 
 // SHOW user from session

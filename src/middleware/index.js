@@ -7,7 +7,7 @@ const exportFunctions = {}
 // midddleware for check user login
 exportFunctions.isLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {
-    return next() 
+    return next()
   } else {
     req.flash('error', 'Devi accedere per poter proseguire.')
     res.redirect('/users/login')
@@ -25,9 +25,8 @@ exportFunctions.isOwnerOrisAdmin = async function (req, res, next) {
         req.flash('error', 'Non sei autorizzato a procedere.')
         res.redirect('back')
       }
-    } catch (e) {
-      console.log('error ', e)
-      res.status(401).send(e.message)
+    } catch (e) { // errore di connessione
+      next(e)
     }
   } else {
     req.flash('error', 'Devi accedere per poter proseguire.')

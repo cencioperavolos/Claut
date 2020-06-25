@@ -7,7 +7,7 @@ const path = require('path')
 const methodOverride = require('method-override')
 const expressSession = require('express-session')
 const passport = require('passport')
-const passportUtils = require('./util/passportUtils') 
+const passportUtils = require('./util/passportUtils')
 const flash = require('connect-flash')
 
 require('dotenv').config()
@@ -45,7 +45,7 @@ app.use(express.static(publicDirectoryPath))
 const MongoStore = require('connect-mongo')(expressSession)
 const sessionStore = new MongoStore({ mongooseConnection: mongoose.connection, collection: 'sessions' })
 app.use(expressSession({
-  secret: process.env.EXPRESS_SESSION_SECRET ,
+  secret: process.env.EXPRESS_SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: sessionStore,
@@ -73,13 +73,31 @@ app.use(function (req, res, next) {
 })
 app.use('/users', usersRoute)
 app.use('/words', wordsRoute)
+
 // Routes ##########################################################################
 app.get('/', (req, res) => {
   res.render('landing')
 })
 
+app.get('/info', (req, res) => {
+  res.render('misc/info')
+})
+
 app.get('/secret', require('./middleware').isLoggedIn, (req, res) => {
-  res.render('users/secret')
+  res.render('misc/secret')
+})
+
+app.get('*', (req, res) => {
+  res.render('misc/404')
+})
+
+// ERROR hnadling
+app.use(function (err, req, res, next) {
+  console.log('#____________________ Claut - Error ________________________#\n', err)
+
+  res.status(500).render('misc/error', {
+    error: err
+  })
 })
 
 const port = process.env.PORT || 3000

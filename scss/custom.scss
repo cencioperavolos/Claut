@@ -1,9 +1,41 @@
-// Custom.scss
-// Option A: Include all of Bootstrap
 
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+/* import only the necessary Bootstrap files */
+@import "../node_modules/bootstrap/scss/functions"; 
+@import "../node_modules/bootstrap/scss/variables";
 
-$body-bg: #ffe9b9;
 
+/* -------begin customization-------- */
+// Your variable overrides
+
+$enable-gradients: true;
+
+$theme-colors: (
+  "primary": #9A938E,
+  "info": #333135,
+  "success": #63a763,
+  "warning": #e1972b,
+  "danger": #f44336,
+  "dark-accent": #827B7A,
+  "dark-shade": #333135,
+  "light-shade": #FCF6EB,
+  "light-accent": #e2d9d0
+  );
+
+$body-bg: theme-color("light-shade");
+$body-color: #131114;
+
+$pagination-bg: theme-color("light-shade");
+$pagination-hover-bg: theme-color("light-accent");
+
+/* -------end customization-------- */
+
+/* finally, import Bootstrap to set the changes! */
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+/* theme colors
+    Light shades #FCF6EB (for background dark on light or inverted) 
+    Light accent #9F9992
+    Main brand #9A938E (main identity of site) -> PRIMARY
+    Dark accent #827B7A
+    Dark shades #333135 (for text-color on light background or inverted) -> INFO
+ */

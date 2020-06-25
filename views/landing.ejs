@@ -1,52 +1,90 @@
-<!doctype html>
-<html lang="en">
+<%- include("./partials/header") %>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- bootstrap css cdn -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-
-    <title>Claut App</title>
-
-    <link rel="stylesheet" href="/css/custom.css"> <!-- Bootstrap customized recompiled with sass-->
-    <link rel="stylesheet" href="/css/landing.css">
-
-</head>
-
-<body>
-
-    <div class="container">
-        <% if(error && error.length > 0){ %>
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card-body text-center">
+                <h2 class="h3 h2-md font-weight-bold">
+                    VOCABOLARIO<br>
+                    C L A U T A N O
+                </h2>
+            </div>
+            <a href="/words" title="Sfoglia">
+                <div class="carousel slide carousel-fade shadow-lg rounded-lg p-2 mb-5" data-ride="carousel">
+                    <div class="carousel-inner ">
+                        <div class="carousel-item active"
+                            style="transition: transform 10s ease 1s, opacity 10s ease-out">
+                            <img class="d-block w-100" src="/images/Laip.jpg" alt="First slide">
+                        </div>
+                        <div class="carousel-item" style="transition: transform 10s ease 1s, opacity 10s ease-out">
+                            <img class="d-block w-100" src="/images/Carro_1.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item" style="transition: transform 10s ease 1s, opacity 10s ease-out">
+                            <img class="d-block w-100" src="/images/Curtivo.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item" style="transition: transform 10s ease 1s, opacity 10s ease-out">
+                            <img class="d-block w-100" src="/images/Archi.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item" style="transition: transform 10s ease 1s, opacity 10s ease-out">
+                            <img class="d-block w-100" src="/images/Carro_2.jpg" alt="Second slide">
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
-        <% } %>
-        <% if(success && success.length > 0){ %>
-        <div class="alert alert-success" role="alert">
-            <%= success %>
+        <div class="col-md-7">
+            <div class="card border-0 bg-primary text-light-shade shadow-lg my-5">
+                <div class="row justify-content-center">
+                    <div class="col-9">
+                        <div class="card bg-dark-shade text-light-shade shadow-lg" style="position: relative; top: -24px; left: -30px">
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0 text-right">
+                                    <p>
+                                        Vi sono due cose durevoli che possiamo sperare di lasciare in eredità ai nostri
+                                        figli:<br>le radici e le ali.
+                                    </p>
+                                    <footer class="blockquote-footer text-light-accent">
+                                        proverbio cinese
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Per sfogliare il vocabolario cliccare sulla fotografia.<br>
+                        Digitando un parola sul campo "cerca" nella barra dei menù si va direttamente alla pagina corrispondente alla parola cercata.<br>
+                    </p>
+                    <p class="card-text">
+                        Il sito è aperto a tutti coloro che desiderano contribuire.<br>
+                        Registrandosi è posibile inserire nuove parole, modificarle e cancellarle. Le parole inserite
+                        saranno visibili solo dall'utente che le ha inserite fin tanto che lo stesso non sarà verificato come "fonte
+                        attendibile".<br>
+                        Per diventare utente attendibile farne richiesta per mezzo del modulo di contatto nella sezione
+                        informazioni.
+                    </p>
+                </div>
+            </div>
+            <div class="card border-0 shadow my-5">
+                <div class="card-header bg-gradient-light-shade">
+                    PRIVACY
+                </div>
+                <div class="card-body bg-light-shade">
+                    <p class="card-text">
+                        I dati di accesso raccolti, servono solo per il funzionamento del sito e non verranno mai
+                        divulgati.<br>
+                        In qualsiasi momento, per qualunque motivo, è possibile richiederne la cancellazione tramite il
+                        modulo
+                        di contatto nella sezione Informazioni.
+                    </p>
+                </div>
+            </div>
+
+
         </div>
-        <% } %>
     </div>
+</div>
 
 
-    <div id="landing-header">
-        <h2 class="text-warning">VOCALBOLARIO</h2>
-        <h1 class="text-warning mb-5">C L A U T A N O</h1>
-        <form class="d-inline-block form-inline my-3 my-lg-0 mr-auto" action="/words/search" method="GET">
-            <input class="form-control bg-transparent border-warning text-warning" type="search" name="parola" placeholder="..." aria-label="Cerca">
-            <button class="btn btn-warning my-2 my-sm-0" type="submit">></button>
-        </form>        
-    </div>
-
-    <ul class="slideshow">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-
-    <% include("partials/footer") %>
+<%- include("./partials/footer") %>
