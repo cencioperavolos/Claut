@@ -50,8 +50,8 @@ app.use(expressSession({
   saveUninitialized: false,
   store: sessionStore,
   cookie: {
-    // maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
-    maxAge: 1000 * 60 * 15, // 15 minutes
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
+    // maxAge: 1000 * 60 * 15, // 15 minutes
     httpOnly: true // no js can acess cookie
     // secure: true, //only https
     // ephemeral: true // destroy cookie when the browser closes
