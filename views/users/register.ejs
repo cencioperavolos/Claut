@@ -19,7 +19,8 @@
                     <div class="form-group">
                         <label for="firstNameInput">Nome:</label>
                         <input class="form-control" id="firstNameInput" type="text" name="firstName"
-                            placeholder="Teresa" aria-describedby="firstNameHelp" required minlength="3" maxlength="15" autofocus>
+                            placeholder="Teresa" aria-describedby="firstNameHelp" required minlength="3" maxlength="15"
+                            autofocus>
                         <small id="firstNameHelp" class="form-text text-muted">Inserire il proprio mone (3-15
                             caratteri).</small>
                     </div>
@@ -62,7 +63,9 @@
         </div>
     </div>
 </div>
-<%- include("../partials/footer") %>
+
+<%- include("../partials/jsLibs") %>
+
 <script>
     function cloneEmail(event) {
         console.log("Cloning....")
@@ -77,3 +80,7 @@
         ele.attachEvent('onsubmit', cloneEmail);            //Old IE
     }
 </script>
+
+</body>
+
+</html>

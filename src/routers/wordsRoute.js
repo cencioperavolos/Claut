@@ -2,6 +2,7 @@
 
 const express = require('express')
 const Word = require('../models/word')
+const Expression = require('../models/expression')
 const isLoggedIn = require('../middleware').isLoggedIn
 const isOwnerOrisAdmin = require('../middleware').isOwnerOrisAdmin
 const router = new express.Router()
@@ -133,22 +134,64 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 router.get('/:id/edit', isOwnerOrisAdmin, async (req, res, next) => {
   try {
     const word = await Word.findById(req.params.id)
+    const expressions = await Expression.find({ words: [word._id] })
     res.render('words/edit', {
-      word: word
+      word: word,
+      expressions: expressions
     })
   } catch (e) {
     next(e)
   };
 })
 
-// UPDATE worde and redirect to index
+// UPDATE word and redirect to index
 router.put('/:id', isOwnerOrisAdmin, async (req, res, next) => {
-  if (!req.body.word.voc_claut_1996) { req.body.word.voc_claut_1996 = false }
+  // if (!req.body.word.voc_claut_1996) { req.body.word.voc_claut_1996 = false }
+  const editingExpressions = JSON.parse(req.body.expressions)
+  const editingWord = (await Word.findById(req.params.id))
+
   try {
+    // update and add new exprssions with word reference
+    for (let index = 0; index < editingExpressions.length; index++) {
+      if (editingExpressions[index].id) {
+        editingExpressions[index] = await Expression.findByIdAndUpdate(editingExpressions[index].id, editingExpressions[index])
+      } else {
+        const newExp = new Expression(editingExpressions[index])
+        newExp.words.push(editingWord._id)
+        editingExpressions[index] = await newExp.save()
+      }
+    }
+
+    // remove word reference to removed expressions and  delete orphan expressions
+    const oldExpressions = await Expression.find({ words: [editingWord._id] })
+    for (let x = 0; x < oldExpressions.length; x++) {
+      let noncepiu = true
+      for (let y = 0; y < editingExpressions.length; y++) {
+        if (editingExpressions[y]._id.equals(oldExpressions[x]._id)) {
+          noncepiu = false
+        }
+      }
+      if (noncepiu) {
+        const wordsUpdated = oldExpressions[x].words.filter(function (wid) {
+          return !wid.equals(editingWord._id)
+        })
+        if (wordsUpdated.length > 0) {
+          oldExpressions[x].words = wordsUpdated
+          await oldExpressions[x].save()
+        } else {
+          await Expression.findByIdAndRemove(oldExpressions[x]._id)
+        }
+      }
+    }
+
+    // find and update word
     const word = await Word.findByIdAndUpdate(req.params.id, req.body.word, {
       new: true,
       runValidators: true
     })
+
+    // _________________________________
+
     if (!word) {
       res.status(404).send('Word not found!')
     }

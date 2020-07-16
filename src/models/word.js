@@ -31,6 +31,12 @@ const wordSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
+  // expressions: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Expression'
+  //   }
+  // ]
 
 })
 

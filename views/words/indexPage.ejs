@@ -16,7 +16,7 @@
         <% } %>
 
         <a href="/words/<%= word._id %>" class="list-group-item list-group-item-action bg-transparent">
-            <div class="<%= word.user.isVerified ? '' : 'notVerified' %>"</div>
+            <div class="<%= word.user.isVerified ? '' : 'notVerified' %>" </div>
                 <span class="clautano"><%= word.clautano %></span>
                 <% if(word.alternativo){ %>
                 <span class="categoria"> (o </span>
@@ -45,4 +45,8 @@
     };
 </script>
 
-<%- include("../partials/footer") %>
+<%- include("../partials/jsLibs") %>
+
+</body>
+
+</html>
