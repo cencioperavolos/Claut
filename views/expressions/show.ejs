@@ -6,37 +6,29 @@
         <div class="card-body">
 
             <h4 class="display-4">
-                <%= word.clautano %>
+                <%= expression.clautano %>
             </h4>
 
             <p class="lead">
-                <% if(word.alternativo){ %>
-                <span class="categoria"> (o </span>
-                <span class="alternativo"><%= word.alternativo %></span><span>)</span>
-                <% } %>
+                <%= expression.italiano %>
             </p>
             <hr class="my-4">
             <p>
-                <span class="categoria mr-2"> <%= word.categoria %></span>
-                <span id="traduzione"><%= word.traduzione %></span>
-            </p>
-            <p>
-                <% for (let exp of expressions){ %>
-                <span class="font-italic"><%= exp.clautano %> - </span> <%= exp.italiano %><br>
+                <% for (let word of expression.words) { %>
+                <%= word.clautano %>
                 <% } %>
             </p>
-
         </div>
 
     </div>
     <div class="d-flex justify-content-between">
-        <% if (word.voc_claut_1996) { %>
+        <% if (expression.voc_claut_1996) { %>
         <small class="text-muted mr-3"><span class="mr-1 font-italic">Fonte:<br></span>'VOCABOLARIO CLAUTANO - Borsatti,
             Giordani, Peressini - 1996'</small>
         <% }  else { %><div></div><% } %>
-        <% if ((currentUser && currentUser.isAdmin === true) || (currentUser && currentUser._id.equals(word.user.id))) { %>
+        <% if ((currentUser && currentUser.isAdmin === true) || (currentUser && currentUser._id.equals(expression.user.id))) { %>
         <small class="text-muted"><span class="mr-1 font-italic">Inserita
-                da:<br></span><%= word.user.fullName %></small>
+                da:<br></span><%= expression.user.fullName %></small>
         <% } else { %><div></div><% } %>
     </div>
 

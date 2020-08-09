@@ -2,7 +2,6 @@
 
 <div class="container">
 
-
     <div class="card my-3 bg-primary text-light-shade">
         <div class="card-body">
             <h4 class="card-title">Modifica parola:<span class="h1 font-weight-light twxt-white">
@@ -38,7 +37,6 @@
             <small id="traduzionelHelp" class="form-text text-muted">Inserire qui la traduzione in italiano della parola
                 clautana</small>
         </div>
-        <%= word.voc_claut_1996 %>
         <div class="form-check">
             <input name="word[voc_claut_1996]" class="form-check-input" type="checkbox" value="true"
                 <%= word.voc_claut_1996 ? 'checked' : '' %> id="voc_claut_Check">
@@ -47,8 +45,16 @@
                 <small id="voc_claut_Help" class="form-text text-muted">Spuntare se presente nel vocabolario
                     indicato</small>
         </div>
-
-        <%- include("./expressionsTable") %>
+        <div class="mt-3">
+            <label for="listaEspressioni">Espressioni tipiche correlate.</label>
+            <ul id="listaEspressioni" class="list-group list-group-flush">
+                <% for (let exp of expressions) { %>
+                    <a href="/expressions/<%= exp._id %>/edit" class="list-group-item list-group-item-action">
+                        <%= exp.clautano %>
+                    </a>                    
+                <% } %>
+            </ul>
+        </div>
 
         <button type="submit" class="btn btn-primary text-white mt-3">Salva</button>
         <a id="go-back" class="btn btn-primary text-light-shade mt-3">Annulla</a>
@@ -62,44 +68,6 @@
 </div>
 
 <%- include("../partials/jsLibs") %>
-
-<script>
-    // remove expressions row
-    $('.table-remove').click(function () {
-        $(this).parents('tr').detach();
-    });
-
-    // add expression row
-    var $TABLE = $('#tableContainer');
-    $('.table-add').click(function () {
-        var $clone = $TABLE.find('tr.d-none').clone(true).removeClass('d-none').addClass('expression');
-        $TABLE.find('table').append($clone);
-    });
-
-    $("#updateForm").submit(function (eventObj) {
-        // $(this).find("input[name="+"something"+"]").remove()
-        $("<input />").attr("type", "hidden")
-            .attr("name", "expressions")
-            .attr("value", getTableExpressions())
-            .appendTo("#updateForm");
-        return true;
-    });
-
-    function getTableExpressions() {
-        const expressions = []
-        const tData = [...expressionsTable.rows].map(t => [...t.children].map(u => u.innerText))
-        for (let index = 2; index < tData.length; index++) {
-            const exp = {
-                "id": tData[index][0],
-                "clautano": tData[index][1],
-                "italiano": tData[index][2]
-            }
-            expressions.push(exp)
-        }
-        console.log(expressions)
-        return JSON.stringify(expressions)
-    }
-</script>
 
 </body>
 

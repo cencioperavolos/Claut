@@ -1,0 +1,180 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-md-8">
+
+            <div class="card my-3 bg-light-accent text-light-shade">
+                <div class="card-body">
+                    <h4 class="card-title">Modifica espressione tipica</h4>
+                </div>
+            </div>
+
+            <form id="updateForm" action="/expressions/<%= expression._id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <label for="clautanoInput">Espressione tipica clautana</label>
+                    <input name="expression[clautano]" type="text" class="form-control"
+                        value="<%= expression.clautano %>" id="clautanoInput" aria-describedby="clautanolHelp"
+                        autofocus>
+                    <small id="wordlHelp" class="form-text text-muted">Inserire qui il modo di dire comune (frase) in
+                        dialetto.</small>
+                </div>
+                <div class="form-group">
+                    <label for="italianoInput">Traduzione italiana</label>
+                    <input name="expression[italiano]" type="text" class="form-control"
+                        placeholder="òh, cosa mi succede!" id="italianoInput" aria-describedby="italianolHelp"
+                        value="<%= expression.italiano %>" autofocus>
+                    <small id="wordlHelp" class="form-text text-muted">Inserire qui la traduzione in italiano.</small>
+                </div>
+                <div class="form-check">
+                    <input name="expression[voc_claut_1996]" class="form-check-input" type="checkbox" value="true"
+                        id="voc_claut_Check">
+                    <label class="form-check-label" for="voc_claut_Check"'>' VOCABOLARIO CLAUTANO - Borsatti, Giordani,
+                        Peressini - 1996'</label> <small id="voc_claut_Help" class="form-text text-muted">Spuntare se
+                            l'espressione è tratta dal
+                            vocabolario
+                            cartaceo</small>
+                </div>
+
+                <!-- words list with navbar menu -->
+                <div id="wordsContainer" class="card mt-3 border-secondary">
+                    <div class="card-body">
+                        <h6 class="card-title">Parole collegate</h6>
+                        <input id="wordInput" class="form-control mr-sm-2 mb-2" type="search" placeholder="Cerca"
+                            form="" aria-label="Cerca">
+                        <ul id="listWords" class="list-group list-group-flush">
+                            <% for (let word of expression.words) { %>
+                            <li class="list-group-item list-group-item-action d-flex justify-content-between">
+                                <div><span class="d-none"><%= word._id%></span><%= word.clautano %></div>
+                                <button id="removeWordButton"
+                                    class="btn btn-sm btn-primary word-remove">Rimuovi</button>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <input type="submit" value="Salva" class="btn btn-secondary">
+                    <a id="go-back" class="btn btn-primary text-white ml-2">Annulla</a>
+                    <script>
+                        document.getElementById('go-back').addEventListener('click', () => {
+                            history.back();
+                        });
+                    </script>
+                </div>
+            </form>
+
+            <!-- modal words selection dialog -->
+            <div class="modal fade" id="wordsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Seleziona la parola da collegare
+                                all'espressione</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                            <button id="addWordButton" type="button" class="btn btn-primary">Conferma</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- --------------------------- -->
+
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/jsLibs") %>
+
+<script>
+
+    // add word - show words selection modal dialog
+    $('#wordInput').on("keypress", function (e) {
+        if (e.which == 13) {
+            var inputVal = $(this).val();
+            $.ajax({
+                url: '/words/ajax',
+                type: 'GET',
+                data: {
+                    parola: inputVal
+                },
+                dataType: 'json',
+                // success callback Function       
+                success: function (data, status, xhr) {
+                    $('#wordsModal .list-group').empty()
+                    for (let i = 0; i < data.length; i++) {
+                        $('#wordsModal .list-group').append('<li class="list-group-item">' +
+                            '<span class="d-none">' + data[i]._id + '</span>' +
+                            data[i].clautano + '</li>');
+                    }
+                    // add selection of activ word
+                    $("#wordsModal .list-group-item").click(function (e) {
+                        $("#wordsModal .list-group-item").removeClass("active");
+                        $(e.target).addClass("active");
+                    });
+
+                    $('#wordsModal').modal()
+                }
+            },
+                {
+                    error: function () {
+                        alert("Chiamata fallita!!!");
+                    }
+                }
+            );
+        }
+    });
+
+    // add word
+    $('#addWordButton').click(() => {
+        let selectedWord = $('.list-group li.active').html()
+        $('#wordsContainer .list-group').append(
+            '<li class="list-group-item list-group-item-action d-flex justify-content-between">' +
+            '<div>' + selectedWord + '</div>' +
+            '<button id="removeWordButton" class="btn btn-sm btn-primary word-remove">Rimuovi</button>' +
+            '</li>'
+        );
+        $('#wordsModal').modal('hide')
+    })
+
+    // remove word
+    $('#wordsContainer').on('click', '.word-remove',
+        function () {
+            $(this).parents('.list-group-item').remove();
+        });
+
+    // update from expression - button submit
+    $("#updateForm").submit(function (eventObj) {
+        $("<input />").attr("type", "hidden")
+            .attr("name", "expression[words]")
+            .attr("value", getWordsIds())
+            .appendTo("#updateForm");
+        return true;
+    });
+
+    function getWordsIds() {
+        const ids = []
+        const listIds = $("#wordsContainer span.d-none")
+        for (let index = 0; index < listIds.length; index++) {
+            ids.push(listIds[index].innerText);
+        }        
+        return JSON.stringify(ids)
+    }
+
+</script>
+
+
+</body>
+
+</html>

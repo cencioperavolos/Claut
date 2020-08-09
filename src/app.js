@@ -15,6 +15,7 @@ require('dotenv').config()
 // routes
 const wordsRoute = require('./routers/wordsRoute')
 const usersRoute = require('./routers/usersRoute')
+const expressionsRoute = require('./routers/expressionsRoute')
 
 // Mongoose config and connect #####################################################
 const databaseUrl = process.env.DATABASEURL || 'mongodb://localhost/vocabolario_clautano'
@@ -73,6 +74,7 @@ app.use(function (req, res, next) {
 })
 app.use('/users', usersRoute)
 app.use('/words', wordsRoute)
+app.use('/expressions', expressionsRoute)
 
 // Routes ##########################################################################
 app.get('/', (req, res) => {

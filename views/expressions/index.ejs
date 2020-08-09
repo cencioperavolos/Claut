@@ -1,0 +1,49 @@
+<%- include("../partials/header") %>
+
+<% if (pages > 0) { %>
+<nav id="navigator">
+    <ul class="pagination justify-content-center mt-3">
+
+        <% if (page <= 1) { %>
+        <li class="page-item invisible"><a class="page-link"></a></li>
+        <% } else { %>
+        <li class="page-item"><a class="page-link  text-dark-shade"
+                href="/expressions/search?ricerca=<%=ricerca%>&page=<%= Number(page)-1%>"><</a></li>
+        <% } %>
+
+        <li class="page-item disabled"><a class="page-link bg-transparent text-dark-accent border-0"><%= page %>
+                /
+                <%= pages %></a></li>
+
+        <% if (page == pages) { %>
+        <li class="page-item invisible"><a class="page-link">></a></li>
+        <% } else { %>
+        <li class="page-item"><a class="page-link text-dark-shade"
+                href="/expressions/search?ricerca=<%=ricerca%>&page=<%= Number(page)+1 %>">></a></li>
+        <% } %>
+    </ul>
+</nav>
+<% } %>
+
+
+<div class="container serifChar">
+
+    <% let previousLetter;
+    let collator = new Intl.Collator('it', {sensitivity: 'base'}); %>
+
+    <div class="list-group list-group-flush">
+        <% expressions.forEach(expression => { %>
+        <a href="/expressions/<%= expression._id %>" class="list-group-item list-group-item-action bg-transparent">
+            <h5 class='font-italic'><%= expression.clautano %></h5>
+        </a>
+        <% }); %>
+    </div>
+
+</div>
+
+
+<%- include("../partials/jsLibs") %>
+
+</body>
+
+</html>

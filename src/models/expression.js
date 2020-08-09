@@ -20,7 +20,14 @@ const expressionSchema = new mongoose.Schema({
       ref: 'Word'
     }
   ],
-
+  user: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    fullName: String,
+    isVerified: Boolean // managed by User
+  },
   voc_claut_1996: { // se vero la parola è presa dal 'VOCABOLARIO CLAUTANO - Borsatti, Giordani, Peressini - 1996'
     type: Boolean,
     default: false
