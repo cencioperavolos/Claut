@@ -6,7 +6,7 @@ const wordSchema = new mongoose.Schema({
   clautano: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true, ADDED COMPOUND INDEX WITH CATEGORIA
     trim: true
   },
   alternativo: { // termine clautano alternativo
@@ -30,8 +30,13 @@ const wordSchema = new mongoose.Schema({
   voc_claut_1996: { // se vero la parola è presa dal 'VOCABOLARIO CLAUTANO - Borsatti, Giordani, Peressini - 1996'
     type: Boolean,
     default: false
-  }  
+  }
 })
+
+wordSchema.index({
+  clautano: 1,
+  categoria: 1
+}, { unique: true })
 
 const Word = mongoose.model('Word', wordSchema)
 
