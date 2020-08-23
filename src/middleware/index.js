@@ -1,9 +1,18 @@
 'use strict'
 
 const Word = require('../models/word')
-const Expression= require('../models/expression')
+const Expression = require('../models/expression')
 
 const exportFunctions = {}
+
+// middleware to secure all express requests on production
+exportFunctions.secureRequest = function (req, res, next) {
+  if (process.env.NODE_ENV === 'production') {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    } else { next() }
+  } else { next() }
+}
 
 // midddleware for check user login
 exportFunctions.isLoggedIn = function (req, res, next) {

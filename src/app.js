@@ -17,6 +17,8 @@ const wordsRoute = require('./routers/wordsRoute')
 const usersRoute = require('./routers/usersRoute')
 const expressionsRoute = require('./routers/expressionsRoute')
 
+const secureRequest = require('./middleware').secureRequest
+
 // Mongoose config and connect #####################################################
 const databaseUrl = process.env.DATABASEURL || 'mongodb://localhost/vocabolario_clautano'
 mongoose.connect(databaseUrl,
@@ -37,6 +39,8 @@ app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+app.use(secureRequest)
 
 // Definne path for Express config and Setup static dir to serve
 const publicDirectoryPath = path.join(__dirname, '..', 'public')
