@@ -3,18 +3,21 @@ var mongoose = require('mongoose')
 var userSchema = new mongoose.Schema({
   firstName: {
     type: String,
+    trim: true,
     required: true,
     minlength: 3,
     maxlength: 15
   },
   lastName: {
     type: String,
+    trim: true,
     required: true,
     minlength: 3,
     maxlength: 15
   },
   surname: {
     type: String,
+    trim: true,
     maxlength: 15
   },
   isAdmin: {
@@ -27,6 +30,8 @@ var userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    trim: true,
+    lowercase: true,
     required: true,
     unique: true
   },
@@ -34,7 +39,14 @@ var userSchema = new mongoose.Schema({
     type: String,
     default: function () { return this.email }
   },
-  password: { type: String }
+  password: {
+    type: String,
+    trim: true,
+    minlength: 8,
+    required: true
+   }
+}, {
+  timestamps: true
 })
 
 userSchema.virtual('fullName').get(function () {

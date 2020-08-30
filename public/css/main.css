@@ -27,6 +27,17 @@
     font-family: 'Roboto Slab';
 }
 
+/* navbar dropdown-menu persoanlization */
+.navbar .dropdown-menu{
+    background-color: var(--info);
+}
+.navbar .dropdown-menu a, .navbar .dropdown-menu button {
+    color: var(--light-accent);
+}
+.navbar .dropdown .show{
+    margin-bottom: 9px;
+}
+
 /* landing page css */
     .blog-card-blog {
         margin-top: 10px;

@@ -10,14 +10,17 @@ const wordSchema = new mongoose.Schema({
     trim: true
   },
   alternativo: { // termine clautano alternativo
-    type: String
+    type: String,
+    trim: true
   },
   categoria: {
-    type: String
+    type: String,
+    trim: true,
   },
   traduzione: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   user: {
     id: {
@@ -31,6 +34,8 @@ const wordSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
+}, {
+  timestamps: true
 })
 
 wordSchema.index({

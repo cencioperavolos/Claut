@@ -5,19 +5,21 @@
     <div class="card my-3 bg-transparent border-primary serifChar">
         <div class="card-body">
 
-            <h4 class="display-4">
-                <%= expression.clautano %>
-            </h4>
+            <blockquote class="blockquote">
+                <p>
+                    <%= expression.clautano %>
+                </p>
+                <footer class="blockquote-footer">
+                    <%= expression.italiano %>
+                </footer>
+            </blockquote>
 
-            <p class="lead">
-                <%= expression.italiano %>
-            </p>
             <hr class="my-4">
-            <p>
+            
                 <% for (let word of expression.words) { %>
-                <%= word.clautano %>
+                <%= word.clautano %> 
                 <% } %>
-            </p>
+            
         </div>
 
     </div>

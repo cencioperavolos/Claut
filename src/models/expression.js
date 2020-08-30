@@ -32,7 +32,8 @@ const expressionSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
-
+}, {
+  timestamps: true
 })
 
 const Expression = mongoose.model('Expression', expressionSchema)
