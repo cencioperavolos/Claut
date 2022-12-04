@@ -21,19 +21,22 @@ router.post('/register', (req, res) => {
     lastName: req.body.lastName,
     surname: req.body.surname,
     email: req.body.email,
-    password: hash
+    password: hash,
   })
 
   // passport authenticate needs req.body.username & req.body.password
-  user.save().then((savedUser) => {
-    passport.authenticate('local')(req, res, function () {
-      req.flash('success', 'Accesso effettuato, ' + user.firstName)
-      res.redirect('/words')
+  user
+    .save()
+    .then((savedUser) => {
+      passport.authenticate('local')(req, res, function () {
+        req.flash('success', 'Accesso effettuato, ' + user.firstName)
+        res.redirect('/words')
+      })
     })
-  }).catch((err) => {
-    req.flash('error', err.message)
-    return res.redirect('/users/register')
-  })
+    .catch((err) => {
+      req.flash('error', err.message)
+      return res.redirect('/users/register')
+    })
 })
 
 // show login form
@@ -89,11 +92,20 @@ router.post('/change', isLoggedIn, async (req, res) => {
 })
 
 // handling user log out
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
   const name = req.user.firstName
-  req.logout()
-  req.flash('success', 'Sani, ' + name)
-  res.redirect('/')
+
+  req.logout(function (err) {
+    if (err) {
+      return next(err)
+    }
+    req.flash('success', 'Sani, ' + name)
+    res.redirect('/')
+  })
+
+  // req.logout()
+  // req.flash('success', 'Sani, ' + name)
+  // res.redirect('/')
 })
 
 // SHOW user from session
